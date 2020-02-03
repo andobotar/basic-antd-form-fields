@@ -2,13 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Form, Icon, Input, InputNumber, Select, Checkbox, Radio, Button } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 
-interface UserFormProps extends FormComponentProps {
-    username: string;
-    password: string;
-    email: string;
-    age: number;
-}
-
 interface Option {
     id: string;
     displayName: string;
@@ -31,7 +24,7 @@ const sexOptions = [
     { id: 'F', displayName: 'Female'},
 ]
 
-const BasicForm: React.FC<UserFormProps> = ({ form }: UserFormProps) => {
+const BasicForm: React.FC<FormComponentProps> = ({ form }: FormComponentProps) => {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched, getFieldValue } = form;
 
     const [countries, setCountries] = useState<Array<Option>>([]);
@@ -55,7 +48,7 @@ const BasicForm: React.FC<UserFormProps> = ({ form }: UserFormProps) => {
     const checkboxError = isFieldTouched('accept') && getFieldError('accept');
 
     const hasErrors = (fieldsError: Record<string, string[] | undefined>) => {
-        return Object.keys(fieldsError).some(field => fieldsError[field]);
+        return Object.keys(fieldsError).some((field) => fieldsError[field]);
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -92,13 +85,7 @@ const BasicForm: React.FC<UserFormProps> = ({ form }: UserFormProps) => {
             <Form.Item label="Password" validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
                 {getFieldDecorator('password', {
                     rules: passwordRule
-                })(
-                    <Input
-                        prefix={<Icon type="lock" theme="twoTone" twoToneColor="#058505" />}
-                        type="password"
-                        placeholder="Password"
-                    />
-                )}
+                })(<Input prefix={<Icon type="lock" theme="twoTone" twoToneColor="#058505" />} type="password" placeholder="Password" />)}
             </Form.Item>
 
             {/* email field - built-in email validation */}
@@ -117,7 +104,7 @@ const BasicForm: React.FC<UserFormProps> = ({ form }: UserFormProps) => {
             <Form.Item label="Country" validateStatus={countryError ? 'error' : ''} help={countryError || ''}>
                 {getFieldDecorator('country', { rules: countryRule })(
                     <Select placeholder="Please choose a counrty">
-                        {countries.map(country => (
+                        {countries.map((country) => (
                             <Select.Option key={country.id} value={country.id}>
                                 {country.displayName}
                             </Select.Option>
@@ -130,7 +117,7 @@ const BasicForm: React.FC<UserFormProps> = ({ form }: UserFormProps) => {
             <Form.Item label="Color">
                 {getFieldDecorator('color')(
                     <Select mode="multiple" placeholder="What's your favorite color?">
-                        {colors.map(color => (
+                        {colors.map((color) => (
                             <Select.Option key={color.id} value={color.id}>
                                 {color.displayName}
                             </Select.Option>
@@ -143,8 +130,10 @@ const BasicForm: React.FC<UserFormProps> = ({ form }: UserFormProps) => {
             <Form.Item>
                 {getFieldDecorator('sex')(
                     <Radio.Group>
-                        {sexes.map(sex => (
-                            <Radio key={sex.id} value={sex.id}>{sex.displayName}</Radio>
+                        {sexes.map((sex) => (
+                            <Radio key={sex.id} value={sex.id}>
+                                {sex.displayName}
+                            </Radio>
                         ))}
                     </Radio.Group>
                 )}
@@ -153,7 +142,7 @@ const BasicForm: React.FC<UserFormProps> = ({ form }: UserFormProps) => {
             {/* checkbox */}
             <Form.Item label="" validateStatus={checkboxError ? 'error' : ''} help={checkboxError || ''}>
                 {/* valuePropName: 'checked' lets the 'validateFields' function find the value of the checkbox */}
-                {getFieldDecorator('accept', { rules: acceptTermsRule, valuePropName: 'checked' })( 
+                {getFieldDecorator('accept', { rules: acceptTermsRule, valuePropName: 'checked' })(
                     <Checkbox>
                         Accept terms and conditions <span style={{ color: 'red' }}>*</span>
                     </Checkbox>
