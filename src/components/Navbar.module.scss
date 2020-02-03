@@ -1,0 +1,21 @@
+.navbar {
+    background-color: #bbb;
+    color: #333;
+    line-height: 40px;
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.navItem {
+    margin: 8px 32px;
+}
+
+.navLink {
+    text-decoration: none;
+    color: rgb(66, 65, 65);
+
+    &:hover {
+        color: black;
+    }
+}
