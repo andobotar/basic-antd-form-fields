@@ -21,6 +21,11 @@ const Navbar: React.FC = () => {
                     Extra input
                 </Link>
             </div>
+            <div className={classes.navItem}>
+                <Link className={classes.navLink} to="/transfer">
+                    Transfer
+                </Link>
+            </div>
         </nav>
     );
 };
