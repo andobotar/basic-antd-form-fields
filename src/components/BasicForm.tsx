@@ -24,7 +24,7 @@ const sexOptions = [
     { id: 'F', displayName: 'Female'},
 ]
 
-const BasicForm: React.FC<FormComponentProps> = ({ form }: FormComponentProps) => {
+const BasicForm: React.FC<FormComponentProps> = ({ form }) => {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched, getFieldValue } = form;
 
     const [countries, setCountries] = useState<Array<Option>>([]);
@@ -47,11 +47,11 @@ const BasicForm: React.FC<FormComponentProps> = ({ form }: FormComponentProps) =
     const countryError = isFieldTouched('country') && getFieldError('country');
     const checkboxError = isFieldTouched('accept') && getFieldError('accept');
 
-    const hasErrors = (fieldsError: Record<string, string[] | undefined>) => {
+    const hasErrors = (fieldsError: ReturnType<typeof getFieldsError>) => {
         return Object.keys(fieldsError).some((field) => fieldsError[field]);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit: React.FormEventHandler = (event) => {
         event.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {

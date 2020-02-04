@@ -8,7 +8,7 @@ const dateFormat = 'YYYY-MM-DD';
 const timeFormat = 'HH:mm:ss';
 const dateTimeFormat = dateFormat + ' ' + timeFormat;
 
-const DateTimePickers: React.FC<FormComponentProps> = ({ form }: FormComponentProps) => {
+const DateTimePickers: React.FC<FormComponentProps> = ({ form }) => {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = form;
 
     // the current date for validation
@@ -28,11 +28,11 @@ const DateTimePickers: React.FC<FormComponentProps> = ({ form }: FormComponentPr
     const dateTimePickerError = isFieldTouched('dateTimePicker') && getFieldError('dateTimePicker');
     const timePickerError = isFieldTouched('timePicker') && getFieldError('timePicker');
 
-    const hasErrors = (fieldsError: Record<string, string[] | undefined>) => {
+    const hasErrors = (fieldsError: ReturnType<typeof getFieldsError>) => {
         return Object.keys(fieldsError).some((field) => fieldsError[field]);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit: React.FormEventHandler = (event) => {
         event.preventDefault();
         form.validateFields((err, fieldsValue) => {
             if (err) {

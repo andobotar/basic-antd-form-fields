@@ -4,13 +4,13 @@ import { FormComponentProps } from 'antd/es/form';
 import { teamOptions } from '../util/cascade-options';
 
 interface CascadeOption {
-  value: string;
-  label?: React.ReactNode;
-  disabled?: boolean;
-  children?: CascadeOption[];
+    value: string;
+    label?: React.ReactNode;
+    disabled?: boolean;
+    children?: CascadeOption[];
 }
 
-const ExtraFields: React.FC<FormComponentProps> = ({ form }: FormComponentProps) => {
+const ExtraFields: React.FC<FormComponentProps> = ({ form }) => {
     const { getFieldDecorator, getFieldsError, getFieldValue } = form;
 
     const [footballTeamOptions, setFootballTeamOptions] = useState<Array<CascadeOption>>([]);
@@ -19,11 +19,11 @@ const ExtraFields: React.FC<FormComponentProps> = ({ form }: FormComponentProps)
         setFootballTeamOptions(teamOptions);
     }, []);
 
-    const hasErrors = (fieldsError: Record<string, string[] | undefined>) => {
+    const hasErrors = (fieldsError: ReturnType<typeof getFieldsError>) => {
         return Object.keys(fieldsError).some((field) => fieldsError[field]);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit: React.FormEventHandler = (event) => {
         event.preventDefault();
         form.validateFields((err, values) => {
             if (!err) {
